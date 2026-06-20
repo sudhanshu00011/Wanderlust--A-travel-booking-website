@@ -10,6 +10,7 @@ const methodOverride = require('method-override');
 const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
+const { MongoStore } = require("connect-mongo");
 const flash = require("connect-flash");
 const listingsRouter = require("./routes/listing.js");
 const reviewsRouter = require("./routes/review.js");
@@ -41,7 +42,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 
+const store = MongoStore.create({
+    mongoUrl : dbUrl,
+    crypto : {
+        secret : process.env.SESSION_SECRET
+    },
+    touchAfter :24 * 3600,
+})
+store.on("error", () => {
+    console.log("ERROR IN MONGO STORE");
+});
 const sessionOptions= {
+    store,
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
