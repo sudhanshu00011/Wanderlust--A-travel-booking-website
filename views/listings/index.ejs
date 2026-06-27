@@ -1,16 +1,22 @@
 <% layout("/layouts/boilerplate") %>
     <style>
+        .cont {
+            display: flex;
+            align-items: center;
+        }
         #filters {
             margin-top: 1rem;
             display: flex;
             overflow-x: auto;
             font-size: 0.9rem;
         }
+
         .filter p {
             font-size: 0.85rem;
             margin-top: 0.5rem;
             text-align: center;
         }
+
         .filter {
             display: flex;
             flex-direction: column;
@@ -21,90 +27,142 @@
             opacity: 0.7;
             width: 4rem;
         }
+
         .filter:hover {
             opacity: 1;
             border-bottom: 3px solid rgb(90, 90, 90);
         }
+
         .tax-info {
             display: none;
             font-size: 0.8rem;
         }
+
         .tax-toggle {
+            display: flex;
             border: 1px solid rgba(0, 0, 0, 0.6);
             border-radius: 1rem;
             height: 2.75rem;
             padding: 0.5rem 1rem;
-             margin-left: auto;
-             margin-right: 1rem;
-             width: 15rem;
-             align-items: center;
-            
+            margin-left: 1rem;
+            margin-right: 0rem;
+            width: 16rem;
+            align-items: center;
         }
+
         .tax-toggle label {
             font-size: 0.85rem;
             width: 100%;
             text-align: center;
         }
+
         .form-check-input {
             margin-left: 0;
-             margin-right: 1rem;
-             align-self: center;
+            margin-right: 1rem;
+            align-self: center;
+        }
+        @media (max-width:1200px) {
+            .tax-toggle label {
+                font-size: 0.78rem;
+            }
+        }
+        @media (max-width:790px) {
+            .tax-toggle  {
+                width: 18rem;
+            }
+        }
+        @media (max-width:600px) {
+            .cont {
+                flex-wrap: wrap;
+                row-gap: 0.5rem;
+            }
+            #filters {
+                width: 100%;
+            }
+            .tax-toggle  {
+                width: 100%;
+                margin-left: 0;
+                font-size: 0.7rem;
+            }
+            .filter {
+                padding: 0;
+                
+            }
+            .filter p {
+                font-size: 0.75rem;
+            }
         }
     </style>
 
     <body>
-        <div id="filters">
-            <a href="/listings" class="filter" style="text-decoration:none;color:inherit;<%= !category ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-globe"></i></div>
-                <p>All</p>
-            </a>
-            <a href="/listings?category=Trending" class="filter" style="text-decoration:none;color:inherit;<%= category==='Trending' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-fire"></i></div>
-                <p>Trending</p>
-            </a>
-            <a href="/listings?category=Rooms" class="filter" style="text-decoration:none;color:inherit;<%= category==='Rooms' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-bed"></i></div>
-                <p>Rooms</p>
-            </a>
-            <a href="/listings?category=Iconic Cities" class="filter" style="text-decoration:none;color:inherit;<%= category==='Iconic Cities' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-mountain-city"></i></div>
-                <p>Iconic Cities</p>
-            </a>
-            <a href="/listings?category=Mountains" class="filter" style="text-decoration:none;color:inherit;<%= category==='Mountains' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-mountain"></i></div>
-                <p>Mountains</p>
-            </a>
-            <a href="/listings?category=Castles" class="filter" style="text-decoration:none;color:inherit;<%= category==='Castles' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-fort-awesome"></i></div>
-                <p>Castles</p>
-            </a>
-            <a href="/listings?category=Arctic" class="filter" style="text-decoration:none;color:inherit;<%= category==='Arctic' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-snowflake"></i></div>
-                <p>Arctic</p>
-            </a>
-            <a href="/listings?category=Amazing Pools" class="filter" style="text-decoration:none;color:inherit;<%= category==='Amazing Pools' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-person-swimming"></i></div>
-                <p>Amazing Pools</p>
-            </a>
-            <a href="/listings?category=Camping" class="filter" style="text-decoration:none;color:inherit;<%= category==='Camping' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-campground"></i></div>
-                <p>Camping</p>
-            </a>
-            <a href="/listings?category=Farms" class="filter" style="text-decoration:none;color:inherit;<%= category==='Farms' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-cow"></i></div>
-                <p>Farms</p>
-            </a>
-            <a href="/listings?category=Domes" class="filter" style="text-decoration:none;color:inherit;<%= category==='Domes' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-igloo"></i></div>
-                <p>Domes</p>
-            </a>
-            <a href="/listings?category=Boats" class="filter" style="text-decoration:none;color:inherit;<%= category==='Boats' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
-                <div><i class="fa-solid fa-ship"></i></div>
-                <p>Boats</p>
-            </a>
+        <div class="cont">
+            <div id="filters">
+                <a href="/listings" class="filter"
+                    style="text-decoration:none;color:inherit;<%= !category ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-globe"></i></div>
+                    <p>All</p>
+                </a>
+                <a href="/listings?category=Trending" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Trending' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-fire"></i></div>
+                    <p>Trending</p>
+                </a>
+                <a href="/listings?category=Rooms" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Rooms' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-bed"></i></div>
+                    <p>Rooms</p>
+                </a>
+                <a href="/listings?category=Iconic Cities" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Iconic Cities' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-mountain-city"></i></div>
+                    <p>Iconic Cities</p>
+                </a>
+                <a href="/listings?category=Mountains" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Mountains' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-mountain"></i></div>
+                    <p>Mountains</p>
+                </a>
+                <a href="/listings?category=Castles" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Castles' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-fort-awesome"></i></div>
+                    <p>Castles</p>
+                </a>
+                <a href="/listings?category=Arctic" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Arctic' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-snowflake"></i></div>
+                    <p>Arctic</p>
+                </a>
+                <a href="/listings?category=Amazing Pools" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Amazing Pools' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-person-swimming"></i></div>
+                    <p>Amazing Pools</p>
+                </a>
+                <a href="/listings?category=Camping" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Camping' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-campground"></i></div>
+                    <p>Camping</p>
+                </a>
+                <a href="/listings?category=Farms" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Farms' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-cow"></i></div>
+                    <p>Farms</p>
+                </a>
+                <a href="/listings?category=Domes" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Domes' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-igloo"></i></div>
+                    <p>Domes</p>
+                </a>
+                <a href="/listings?category=Boats" class="filter"
+                    style="text-decoration:none;color:inherit;<%= category==='Boats' ? 'opacity:1;border-bottom:3px solid rgb(90,90,90);' : '' %>">
+                    <div><i class="fa-solid fa-ship"></i></div>
+                    <p>Boats</p>
+                </a>
+
+            </div>
             <div class="form-check-reverse form-switch tax-toggle">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Display with tax information</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+
             </div>
         </div>
         <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-2">
@@ -122,7 +180,7 @@
                                     <%= listing.title %>
                                 </b>
                                 <br>&#8377; <%=listing.price.toLocaleString("en-IN")%>/night
-                                <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
+                                    <i class="tax-info">&nbsp;&nbsp;+18% GST</i>
                             </p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
@@ -133,9 +191,9 @@
         </div>
         <script>
             let taxSwitch = document.getElementById('flexSwitchCheckDefault');
-            taxSwitch.addEventListener('change', function() {
+            taxSwitch.addEventListener('change', function () {
                 let taxInfo = document.getElementsByClassName('tax-info');
-                if (this.checked) { 
+                if (this.checked) {
                     for (let i = 0; i < taxInfo.length; i++) {
                         taxInfo[i].style.display = 'inline';
                     }

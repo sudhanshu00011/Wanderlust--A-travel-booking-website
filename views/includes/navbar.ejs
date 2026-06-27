@@ -1,55 +1,176 @@
 <style>
+  .icon {
+    margin-left: 1rem;
+    margin-right: 0;
+  }
+
   .btn-search {
     background-color: #ff385c;
     color: white;
-    border-radius: 2rem;
-    padding: 0 1rem;
+    border-radius: 50%;
+    width: 2.6rem;
+    height: 2.6rem;
+    min-width: 2.6rem;
+    padding: 0;
     font-size: 0.95rem;
-    display: inline;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
+
   .btn-search:hover {
     background-color: #ff385c;
     color: white;
   }
+
   .btn-search i {
-    display: inline;
-    margin-right: 0.5rem;
+    margin: 0;
     font-size: 0.9rem;
   }
+
   .search-input {
     border-radius: 2rem;
     padding: 0.5rem 1.5rem;
     font-size: 0.95rem;
+    width: 12rem;
   }
+
+  @media (max-width:760px) {
+    .search-input {
+      width: 8.5rem;
+    }
+  }
+
+  @media (max-width:500px) {
+    .search-input {
+      width: 6.5rem;
+      padding: 0.5rem 1rem;
+    }
+  }
+
+  /* --- Hamburger menu --- */
+
+  .ham-options {
+    display: none; /* hidden on desktop, shown only in the mobile media query */
+  }
+
+  /* Hide the actual checkbox input — the label is what gets clicked */
+  .check {
+    display: none;
+  }
+
+  .ham-menu {
+    display: none; /* shown only in the mobile media query */
+    cursor: pointer;
+    font-size: 1.3rem;
+  }
+
+  /* Dropdown panel — hidden by default */
+  .ham-air {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    flex-direction: column;
+    gap: 0.5rem;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1050;
+    min-width: 12rem;
+  }
+
+  @media (max-width:900px) {
+    .nav-link {
+      font-size: 1rem;
+    }
+
+    .air-nav .nav-link {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width:800px) {
+    .nav-link {
+      font-size: 0.9rem;
+    }
+
+    .air-nav .nav-link {
+      font-size: 0.77rem;
+    }
+  }
+
+  @media (max-width:760px) {
+    /* Hide the normal Airbnb/sign up/log in links entirely on mobile */
+    .air-nav {
+      display: none;
+    }
+
+    .ham-options {
+      display: flex;
+      position: relative;
+      align-items: center;
+    }
+
+    .ham-menu {
+      display: inline-block;
+      margin-left: 1.5rem;
+      margin-right: 0.5rem;
+    }
+
+    /* The key fix: when the checkbox is checked, show its SIBLING .ham-air */
+    .check:checked ~ .ham-air {
+      display: flex;
+    }
+  }
+
 </style>
 
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+<nav class="navbar navbar-expand bg-body-light border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass icon"></i></a>
       <div class="navbar-nav">
         <a class="nav-link" href="/listings">Explore</a>
-
       </div>
       <div class="navbar-nav ms-auto">
         <form class="d-flex" role="search">
-          <input class="form-control me-2 search-input" type="search" placeholder="Search destinations" aria-label="Search">
-          <button class="btn btn-search" type="submit"><i class="fa-solid fa-search"></i>Search</button>
+          <input class="form-control me-2 search-input" type="search" placeholder="Search"
+            aria-label="Search">
+          <button class="btn btn-search" type="submit" aria-label="Search"><i class="fa-solid fa-search"></i></button>
         </form>
       </div>
-      <div class="navbar-nav ms-auto">
+
+      <div class="navbar-nav ms-auto air-nav">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
         <% if (!currentUser) { %>
           <a class="nav-link" href="/signup"><b>Sign up</b></a>
           <a class="nav-link" href="/login"><b>Log in</b></a>
-          <% } if(currentUser) { %>
-            <a class="nav-link" href="/logout"><b>Log out</b></a>
-            <% } %>
+        <% } if (currentUser) { %>
+          <a class="nav-link" href="/logout"><b>Log out</b></a>
+        <% } %>
       </div>
+
+      <div class="ham-options">
+        <input class="check" type="checkbox" id="flexCheckDisabled">
+        <label for="flexCheckDisabled">
+          <i class="fa-solid fa-bars ham-menu"></i>
+        </label>
+
+        <div class="ham-air">
+          <a class="nav-link" href="/listings/new">Airbnb your home</a>
+          <% if (!currentUser) { %>
+            <a class="nav-link" href="/signup"><b>Sign up</b></a>
+            <a class="nav-link" href="/login"><b>Log in</b></a>
+          <% } if (currentUser) { %>
+            <a class="nav-link" href="/logout"><b>Log out</b></a>
+          <% } %>
+        </div>
+      </div>
+
     </div>
   </div>
 </nav>
